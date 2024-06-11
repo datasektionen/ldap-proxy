@@ -76,10 +76,10 @@ func lookupUser(w http.ResponseWriter, r *http.Request) {
 	}
 	entry := res.Entries[0]
 	var user struct {
-		KTHID     string `ldap:"ugUsername" json:"kthid"`
-		UGKTHID   string `ldap:"ugKthid"    json:"ug_kthid"`
-		FirstName string `ldap:"givenName"  json:"first_name"`
-		Surname   string `ldap:"sn"         json:"surname"`
+		KTHID      string `ldap:"ugUsername" json:"kthid"`
+		UGKTHID    string `ldap:"ugKthid"    json:"ug_kthid"`
+		FirstName  string `ldap:"givenName"  json:"first_name"`
+		FamilyName string `ldap:"sn"         json:"family_name"`
 
 		DisplayName string `ldap:"displayName" json:"-"`
 		Email       string `ldap:"mail"        json:"-"`
@@ -90,9 +90,9 @@ func lookupUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Could not parse user from ldap server", http.StatusInternalServerError)
 		return
 	}
-	if user.DisplayName != user.FirstName+" "+user.Surname ||
+	if user.DisplayName != user.FirstName+" "+user.FamilyName ||
 		user.Email != user.KTHID+"@kth.se" ||
-		user.Cn != user.FirstName+" "+user.Surname+" ("+user.KTHID+")" {
+		user.Cn != user.FirstName+" "+user.FamilyName+" ("+user.KTHID+")" {
 		u, _ := json.MarshalIndent(user, "", "    ")
 		slog.Warn("User doesn't match expectations", "user", string(u))
 	}

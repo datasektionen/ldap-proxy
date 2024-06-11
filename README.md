@@ -14,7 +14,7 @@ Unless there are any errors, the response will have `Content-Type` set to
 `application/json`. Example response body:
 
 ```json
-{"kthid":"turetek","ug_kthid":"u1jwkms6","first_name":"Ture","surname":"Teknokrat"}
+{"kthid":"turetek","ug_kthid":"u1jwkms6","first_name":"Ture","family_name":"Teknokrat"}
 ```
 
 If there is an error `Content-Type` will not be set. An error message will be
