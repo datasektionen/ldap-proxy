@@ -7,15 +7,11 @@ WORKDIR /src
 
 COPY go.* ./
 
-RUN --mount=type=cache,target=/go/pkg/mod/ \
-    --mount=type=cache,target=/root/.cache/go-build/ \
-    go mod download -x
+RUN go mod download -x
 
 COPY *.go ./
 
-RUN --mount=type=cache,target=/go/pkg/mod/ \
-    --mount=type=cache,target=/root/.cache/go-build/ \
-    CGO_ENABLED=0 go build -o /bin/server .
+RUN CGO_ENABLED=0 go build -o /bin/server .
 
 FROM alpine:${ALPINE_VERSION}
 
